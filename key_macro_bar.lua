@@ -31,7 +31,9 @@ local function SetDefaultMacros()
     MoveMacroToBar("Heartstone_A", 70) -- key 0
 
     local mount = AAAMB.Methods.GetFlyAndGroundMount()
-    local mount_macrobody = "/stopcasting" .. (mount[2] and "\n/cast !" .. mount[2] or "") .. (mount[1] and "\n/cast !" .. mount[1] or "")
+    local mount_header = "/cancelaura " .. (mount[2] and mount[2] or "")
+    mount_header = mount_header .. "\n/cancelaura " .. (mount[1] and mount[1] or "")
+    local mount_macrobody = mount_header .. "\n/stopcasting" .. (mount[2] and "\n/cast " .. mount[2] or "") .. (mount[1] and "\n/cast " .. mount[1] or "")
     CreateCharMacro("Mount_A", mount_macrobody)
     MoveMacroToBar("Mount_A", 69) -- key 9
 

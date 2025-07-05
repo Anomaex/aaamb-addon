@@ -15,7 +15,7 @@ local function Follow()
     if AAAMB.follow_paused then return end
 
     if AAAMB.click_to_move then
-        if CheckInteractDistance(AAAMB.tank, 3) then
+        if AAAMB.tank and CheckInteractDistance(AAAMB.tank, 3) then
             if UnitExists("target") then
                 SetCVar("AutoInteract", 1)
                 return
