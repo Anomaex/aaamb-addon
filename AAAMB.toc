@@ -1,0 +1,18 @@
+## Interface: 30300
+## Title: AAAMB
+## Notes: Addon for help multibox control, pare with AHK2.
+## Author: Anomaex
+## Version: 1.0.0
+
+config.lua
+helper.lua
+mounts.lua
+key_macro_bar.lua
+main.lua
+commands.lua
+follow.lua
+
+templates\paladin_damager.lua
+templates\paladin_healer.lua
+templates\paladin.lua
+templates\template.lua
