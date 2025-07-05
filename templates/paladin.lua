@@ -89,13 +89,24 @@ local function SetKeyMacroBar()
         AAAMB.Methods.KMB.MoveMacroToBar("HoF_A", 9) -- key c
     end
 
-    AAAMB.Methods.KMB.MoveSpellToBar("Redemption", 27)
+    AAAMB.Methods.KMB.MoveSpellToBar("Redemption", 28)
     AAAMB.Methods.KMB.MoveSpellToBar("Divine Shield", 11)
     AAAMB.Methods.KMB.MoveSpellToBar("Every Man for Himself", 12)
 end
 
 
 function AAAMB.Methods.Templates.Paladin.CheckDispel(unit, texture, check_only)
+    local is_exists = UnitExists(unit)
+    local is_connected = UnitIsConnected(unit)
+    local is_enemy = UnitIsEnemy("player", unit)
+    local in_range = IsSpellInRange("Holy Light", AAAMB.tank)
+    local is_visible = UnitIsVisible(AAAMB.tank)
+    if not in_range or not is_visible or not is_exists or not is_connected or is_enemy then
+        if check_only then return false end
+        texture:SetVertexColor(0, 1, 0, 1) -- green
+        return false
+    end
+
     local debuff = false
     for i = 1, 40 do
         local name, _, _, _, debuff_type, _, exp_time, _, _, _, spell_id = UnitDebuff(unit, i, 1)

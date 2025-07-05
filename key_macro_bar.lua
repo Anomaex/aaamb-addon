@@ -52,6 +52,8 @@ local function SetDefaultMacros()
 
     CreateCharMacro("Click_to_Move_A", "/aaamb click_to_move")
     MoveMacroToBar("Click_to_Move_A", 65) -- key 5
+
+    AAAMB.Methods.KMB.MoveSpellToBar("Disenchant", 27) -- key PageDown
 end
 
 
@@ -106,6 +108,7 @@ local function BindDefaultKeys()
 
     BindKey("END", "MULTIACTIONBAR3BUTTON1")
     BindKey("PAGEUP", "MULTIACTIONBAR3BUTTON2")
+    BindKey("PAGEDOWN", "MULTIACTIONBAR3BUTTON3")
 
     BindKey("y", "MULTIACTIONBAR2BUTTON1")
     BindKey("u", "MULTIACTIONBAR2BUTTON2")

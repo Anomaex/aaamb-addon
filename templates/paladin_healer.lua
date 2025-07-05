@@ -194,7 +194,9 @@ local function CheckBoL()
             local is_ghost = UnitIsGhost(AAAMB.tank)
             local is_exists = UnitExists(AAAMB.tank)
             local is_enemy = UnitIsEnemy("player", AAAMB.tank)
-            if is_death or is_ghost or not is_exists or is_enemy then
+            local in_range = IsSpellInRange("Holy Light", AAAMB.tank)
+            local is_visible = UnitIsVisible(AAAMB.tank)
+            if not is_visible or not in_range or is_death or is_ghost or not is_exists or is_enemy then
                 bol_tsf:SetVertexColor(0, 1, 0, 1) -- green
                 return
             end

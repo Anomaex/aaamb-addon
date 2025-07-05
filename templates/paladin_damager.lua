@@ -22,7 +22,7 @@ local function Damage_Rotation_JoL()
         local in_range = IsSpellInRange("Judgement of Light", "target") == 1
         if in_range then
             -- cast Judgement of Light
-            damage_rotation:SetVertexColor(1, 1, 0, 1) -- yellow
+            damage_rotation_tsf:SetVertexColor(1, 1, 0, 1) -- yellow
             return 0
         end
     end
@@ -264,7 +264,7 @@ local function CheckPartyDispel()
     if AAAMB.healer then
         is_dispel = AAAMB.Methods.Templates.Paladin.CheckDispel(AAAMB.healer, nil, true)
         if is_dispel then
-            party_dispel_tsf:SetVertexColor(1, 0, 0, 1) -- red
+            party_dispel_tsf:SetVertexColor(0, 0, 1, 1) -- blue
             return
         end
     end
@@ -278,7 +278,7 @@ local function CheckPartyDispel()
     if AAAMB.damagers[2] then
         is_dispel = AAAMB.Methods.Templates.Paladin.CheckDispel(AAAMB.damagers[2], nil, true)
         if is_dispel then
-            party_dispel_tsf:SetVertexColor(0, 0, 1, 1) -- blue
+            party_dispel_tsf:SetVertexColor(1, 0, 0, 1) -- red
             return
         end
     end

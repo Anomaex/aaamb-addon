@@ -125,6 +125,17 @@ function AAAMB.Methods.ScanHealth(unit, texture)
         SetCharacterState(0, texture)
         return
     end
+
+    local is_exists = UnitExists(unit)
+    local is_connected = UnitIsConnected(unit)
+    local is_enemy = UnitIsEnemy("player", unit)
+    local in_range = IsSpellInRange("Holy Light", unit)
+    local is_visible = UnitIsVisible(unit)
+    if not in_range or not is_visible or not is_exists or not is_connected or is_enemy then
+        SetCharacterState(0, texture)
+        return
+    end
+
     local health = UnitHealth(unit)
     local max_health = UnitHealthMax(unit)
     local percent = 0
@@ -201,7 +212,7 @@ local function OnEvent(self, event, arg1, arg2, ...)
         AcceptResurrect()
         StaticPopup_Hide("RESURRECT")
     elseif event == "START_LOOT_ROLL" then
-        RollOnLoot(arg1, 2)  -- arg1 it's roll_id, 0 = PASS, 1 - Need, 2 - Greed, 3 - Disenchant
+        RollOnLoot(arg1, 0)  -- arg1 it's roll_id, 0 = PASS, 1 - Need, 2 - Greed, 3 - Disenchant
     elseif event == "TRADE_ACCEPT_UPDATE" then
         if arg2 == 1 then
             is_trade = true
