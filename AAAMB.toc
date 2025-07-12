@@ -11,8 +11,12 @@ key_macro_bar.lua
 main.lua
 commands.lua
 follow.lua
+quests.lua
 
 templates\paladin_damager.lua
-templates\paladin_healer.lua
 templates\paladin.lua
+
+templates\druid_healer.lua
+templates\druid.lua
+
 templates\template.lua

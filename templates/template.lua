@@ -1,7 +1,9 @@
 
 function AAAMB.Methods.Templates.Init()
-    local _, class = UnitClass("player")
-    if class == "PALADIN" then
+    local class = UnitClass("player")
+    if class == "Druid" then
+        AAAMB.Methods.Templates.Druid.Init()
+    elseif class == "Paladin" then
         AAAMB.Methods.Templates.Paladin.Init()
     end
 end

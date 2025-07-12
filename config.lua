@@ -6,19 +6,21 @@
 AAAMB = {
     char_names = {
         tank = "Initiator",
-        healer = "Dropbop",
+        healer = "Silini",
         damagers = {
-            "Raifanzen",
-            "Bashscript",
-            "Goggi"
+            "Mieko",
+            "Naoni",
+            "Ionari"
         }
     },
     Methods = {
         KMB = {},
         Templates = {
             Paladin = {
-                Healer = {},
                 Damager = {}
+            },
+            Druid = {
+                Healer = {}
             }
         }
     },
@@ -28,7 +30,5 @@ AAAMB = {
     follow = false,
     follow_paused = false,
     stay_at_place = false,
-    click_to_move = false,
-    health_percent = 100,
-    mana_percent = 100
+    click_to_move = false
 }

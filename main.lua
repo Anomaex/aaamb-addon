@@ -1,6 +1,6 @@
 --
 -- Initialize contol party
--- Initialize KMB (Key Macro Bar)
+-- Next initialize KMB (Key Macro Bar)
 --
 
 
@@ -8,15 +8,14 @@ local frame = nil
 
 
 local function GetDamagersIndeces()
-    local count = GetNumPartyMembers()
     local damagers = {}
+    local count = GetNumPartyMembers()
     for i = 1, count do
         local unit = "party" .. i
         if unit ~= AAAMB.tank and unit ~= AAAMB.healer then
             table.insert(damagers, unit)
         end
     end
-    
     return damagers
 end
 
@@ -91,25 +90,17 @@ local function GetTankIndex()
 end
 
 
-local function PartyChanges()
+local function Init()
+    AAAMB.Methods.KMB.PreInit()
+
     AAAMB.tank = GetTankIndex()
     AAAMB.healer = GetHealerIndex()
     AAAMB.damagers = GetDamagersIndeces()
+
     AAAMB.Methods.KMB.PartyChanges()
-end
 
-
-local function OnEvent(self, event, ...) 
-    if event == "PARTY_MEMBERS_CHANGED" then
-        PartyChanges()
-    end
-end
-
-
-local function PostInit()
-    AAAMB.Methods.KMB.PreInit()
-    PartyChanges()
     AAAMB.Methods.Templates.Init()
+
     if GetNumPartyMembers() > 0 then
         SendChatMessage(
             "[T]: " .. (AAAMB.tank and AAAMB.tank or "-") ..
@@ -118,13 +109,6 @@ local function PostInit()
     else
         print("|cff00ff00[AAAMB]:|r You are not in PARTY!")
     end
-end
-
-
-local function Init()
-    frame:RegisterEvent("PARTY_MEMBERS_CHANGED")
-    frame:SetScript("OnEvent", OnEvent)
-    PostInit()
 end
 
 
