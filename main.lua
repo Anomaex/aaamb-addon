@@ -12,22 +12,23 @@ local function GetDamagersIndeces()
     local count = GetNumPartyMembers()
     for i = 1, count do
         local unit = "party" .. i
-        if unit ~= AAAMB.tank and unit ~= AAAMB.healer then
-            table.insert(damagers, unit)
+        local name = UnitName(unit)
+        if name ~= AAAMB.tank and name ~= AAAMB.healer then
+            table.insert(damagers, name)
         end
     end
     return damagers
 end
 
 
-local function GetHealerIndex()
+local function GetHealer()
     local count = GetNumPartyMembers()
     local healer = nil
     for i = 1, count do
         local unit = "party" .. i
         local role = UnitGroupRolesAssigned(unit)
         if role == "HEALER" then
-            healer = unit
+            healer = UnitName(unit)
             break
         end
     end
@@ -37,7 +38,7 @@ local function GetHealerIndex()
             local unit = "party" .. i
             local name = UnitName(unit)
             if name == AAAMB.char_names.healer then
-                healer = unit
+                healer = name
                 break
             end
         end
@@ -46,7 +47,7 @@ local function GetHealerIndex()
     if not tank then
         local name = UnitName("player")
         if name == AAAMB.char_names.healer then
-            healer = "player"
+            healer = name
         end
     end
 
@@ -54,14 +55,14 @@ local function GetHealerIndex()
 end
 
 
-local function GetTankIndex()
+local function GetTank()
     local count = GetNumPartyMembers()
     local tank = nil
     for i = 1, count do
         local unit = "party" .. i
         local role = UnitGroupRolesAssigned(unit)
         if role == "TANK" then
-            tank = unit
+            tank = UnitName(unit)
             break
         end
     end
@@ -71,7 +72,7 @@ local function GetTankIndex()
             local unit = "party" .. i
             local name = UnitName(unit)
             if name == AAAMB.char_names.tank then
-                tank = unit
+                tank = name
                 break
             end
         end
@@ -81,7 +82,7 @@ local function GetTankIndex()
         if count > 0 then
             local index = GetPartyLeaderIndex()
             if index ~= 0 and not IsPartyLeader() then
-                tank = "party" .. index
+                tank = UnitName("party" .. index)
             end
         end
     end
@@ -93,8 +94,8 @@ end
 local function Init()
     AAAMB.Methods.KMB.PreInit()
 
-    AAAMB.tank = GetTankIndex()
-    AAAMB.healer = GetHealerIndex()
+    AAAMB.tank = GetTank()
+    AAAMB.healer = GetHealer()
     AAAMB.damagers = GetDamagersIndeces()
 
     AAAMB.Methods.KMB.PartyChanges()

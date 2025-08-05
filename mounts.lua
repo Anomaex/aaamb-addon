@@ -13,7 +13,8 @@ local mounts = {
             "Charger"
         },
         slow = {
-            "Warhorse"
+            "Warhorse",
+            "Striped Dawnsaber"
         }
     }
 }

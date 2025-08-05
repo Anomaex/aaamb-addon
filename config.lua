@@ -6,7 +6,7 @@
 AAAMB = {
     char_names = {
         tank = "Initiator",
-        healer = "Silini",
+        healer = "Siline",
         damagers = {
             "Mieko",
             "Naoni",
@@ -15,9 +15,11 @@ AAAMB = {
     },
     Methods = {
         KMB = {},
+        Helper = {},
         Templates = {
             Paladin = {
-                Damager = {}
+                Damager = {},
+                Healer = {}
             },
             Druid = {
                 Healer = {}

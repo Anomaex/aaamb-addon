@@ -27,7 +27,7 @@ local function SetDefaultMacros()
     CreateCharMacro("Exit_A", "/quit")
     MoveMacroToBar("Exit_A", 71) -- key -
 
-    CreateCharMacro("Heartstone_A", "/use Hearthstone")
+    CreateCharMacro("Heartstone_A", "#showtooltip Hearthstone\n/use Hearthstone")
     MoveMacroToBar("Heartstone_A", 70) -- key 0
 
     local mount = AAAMB.Methods.GetFlyAndGroundMount()
@@ -36,6 +36,9 @@ local function SetDefaultMacros()
     local mount_macrobody = mount_header .. "\n/stopcasting" .. (mount[2] and "\n/cast " .. mount[2] or "") .. (mount[1] and "\n/cast " .. mount[1] or "")
     CreateCharMacro("Mount_A", mount_macrobody)
     MoveMacroToBar("Mount_A", 69) -- key 9
+
+    CreateCharMacro("LFG_In_A", "/run AcceptProposal()")
+    MoveMacroToBar("LFG_In_A", 66) -- key 6
 
     CreateCharMacro("Trade_A", "/run AcceptTrade()")
     MoveMacroToBar("Trade_A", 67) -- key 7
@@ -56,6 +59,17 @@ local function SetDefaultMacros()
     MoveMacroToBar("Click_to_Move_A", 65) -- key 5
 
     AAAMB.Methods.KMB.MoveSpellToBar("Disenchant", 27) -- key PageDown
+    AAAMB.Methods.KMB.MoveSpellToBar("Enchanting", 28)
+    AAAMB.Methods.KMB.MoveSpellToBar("Tailoring", 29)
+
+    AAAMB.Methods.KMB.MoveSpellToBar("Milling", 27) -- key PageDown
+    AAAMB.Methods.KMB.MoveSpellToBar("Alchemy", 28)
+    AAAMB.Methods.KMB.MoveSpellToBar("Inscription", 29)
+
+    AAAMB.Methods.KMB.MoveSpellToBar("Skinning", 27) -- key PageDown
+    AAAMB.Methods.KMB.MoveSpellToBar("Leatherworking", 28)
+
+    AAAMB.Methods.KMB.MoveSpellToBar("Engineering", 28)
 end
 
 
@@ -111,6 +125,11 @@ local function BindDefaultKeys()
     BindKey("END", "MULTIACTIONBAR3BUTTON1")
     BindKey("PAGEUP", "MULTIACTIONBAR3BUTTON2")
     BindKey("PAGEDOWN", "MULTIACTIONBAR3BUTTON3")
+
+    BindKey("F5", "MULTIACTIONBAR3BUTTON9")
+    BindKey("F6", "MULTIACTIONBAR3BUTTON10")
+    BindKey("F7", "MULTIACTIONBAR3BUTTON11")
+    BindKey("F8", "MULTIACTIONBAR3BUTTON12")
 
     BindKey("y", "MULTIACTIONBAR2BUTTON1")
     BindKey("u", "MULTIACTIONBAR2BUTTON2")
@@ -198,6 +217,21 @@ local function UnbindRequiredKeys()
     UnbindKey("F10")
     UnbindKey("F11")
     UnbindKey("F12")
+
+    UnbindKey("SHIFT-F5")
+    UnbindKey("SHIFT-F6")
+    UnbindKey("SHIFT-F7")
+    UnbindKey("SHIFT-F8")
+
+    UnbindKey("CTRL-F5")
+    UnbindKey("CTRL-F6")
+    UnbindKey("CTRL-F7")
+    UnbindKey("CTRL-F8")
+
+    UnbindKey("ALT-F5")
+    UnbindKey("ALT-F6")
+    UnbindKey("ALT-F7")
+    UnbindKey("ALT-F8")
     
     UnbindKey("SHIFT-1")
     UnbindKey("SHIFT-2")
@@ -268,6 +302,7 @@ end
 
 
 function AAAMB.Methods.KMB.MoveItemToBar(bag, bag_slot, slot)
+    ClearCursor()
     PickupContainerItem(bag, bag_slot)
     PlaceAction(slot)
     ClearCursor()
@@ -314,7 +349,7 @@ end
 function AAAMB.Methods.KMB.PartyChanges()
     DeleteMacro("Target_A")
     if AAAMB.tank then
-        CreateCharMacro("Target_A", "/cleartarget\n/target [target=" .. AAAMB.tank .. "target]")
+        CreateCharMacro("Target_A", "/cleartarget\n/assist [target=" .. AAAMB.tank)
         MoveMacroToBar("Target_A", 68) -- key 8
     end
 end

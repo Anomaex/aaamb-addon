@@ -1,16 +1,17 @@
 
 local frame = nil
 local rotation_tsf = nil
+local judgement_name = "Judgement of Light"
 local time = 0
 
 
-local function Rotation_JoL()
-    local cd = GetSpellCooldown("Judgement of Light")
+local function Rotation_Consecration()
+    local cd = GetSpellCooldown("Consecration")
     if cd == 0 then
-        local in_range = IsSpellInRange("Judgement of Light", "target") == 1
+        local in_range = IsSpellInRange(judgement_name, "target") == 1
         if in_range then
-            -- cast Judgement of Light
-            rotation_tsf:SetVertexColor(0, 0, 1, 1) -- blue
+            -- cast Consecration
+            rotation_tsf:SetVertexColor(1, 1, 0, 1) -- yellow
             return 0
         end
     end
@@ -18,7 +19,36 @@ local function Rotation_JoL()
 end
 
 
-local function GetMana()
+local function Rotation_JoL()
+    local cd = GetSpellCooldown(judgement_name)
+    if cd == 0 then
+        local in_range = IsSpellInRange(judgement_name, "target") == 1
+        if in_range then
+            -- cast Judgement
+            rotation_tsf:SetVertexColor(0, 1, 0, 1) -- green
+            return 0
+        end
+    end
+    return 1
+end
+
+
+local function GetTargetHealthPercent()
+    local unit = "target"
+    if not UnitExists(unit) then
+        return 0
+    end
+    local health = UnitHealth(unit)
+    local max_health = UnitHealthMax(unit)
+    local percent = 0
+    if max_health > 0 then
+        percent = (health / max_health) * 100
+    end
+    return percent
+end
+
+
+local function GetManaPercent()
     local unit = "player"
     local flag = UnitIsDead(unit)
     flag = UnitIsGhost(unit)
@@ -47,13 +77,12 @@ local function Rotation()
         end
     end
 
-    if not is_attack then
-        rotation_tsf:SetVertexColor(0, 1, 0, 1) -- green
-        return
-    end
+    rotation_tsf:SetVertexColor(0, 0, 0, 1) -- black
+
+    if not is_attack then return end
 
     local cd = -1
-    local mana = GetMana()
+    local mana = GetManaPercent()
 
     if mana < 50 then
         cd = Rotation_JoL()
@@ -68,6 +97,15 @@ local function Rotation()
     if cd == 0 then
         return
     end
+
+    if mana > 50 then
+        if GetTargetHealthPercent() > 30 then
+            cd = Rotation_Consecration()
+            if cd == 0 then
+                return
+            end
+        end
+    end
 end
 
 
@@ -81,7 +119,20 @@ end
 
 
 local function SetKeyMacroBar()
-    AAAMB.Methods.KMB.MoveSpellToBar("Judgement of Light", 3) -- key r
+    for i = 1, #AAAMB.char_names.damagers do
+        local unit_name = UnitName("player")
+        if unit_name == AAAMB.char_names.damagers[1] then
+            local flag = GetSpellInfo("Judgement of Wisdom")
+            if flag then
+                judgement_name = "Judgement of Wisdom"
+                AAAMB.Methods.KMB.MoveSpellToBar("Judgement of Wisdom", 1) -- key q
+            end
+            break
+        end
+    end
+
+    AAAMB.Methods.KMB.MoveSpellToBar("Consecration", 2) -- key e
+    AAAMB.Methods.KMB.MoveSpellToBar("Exorcism", 3) -- key r
 end
 
 

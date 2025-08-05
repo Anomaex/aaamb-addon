@@ -23,17 +23,17 @@ local function OnEvent(self, event, arg1, ...)
             SelectAvailableQuest(i)
         end
         local numActiveQuests = GetNumActiveQuests()
-        for i = 1, numActiveQuests do
+        for i = numActiveQuests, 1, -1 do
             SelectActiveQuest(i)
         end
-        
+
     elseif event == "GOSSIP_SHOW" then
         local numAvailableQuests = GetNumGossipAvailableQuests()
         for i = 1, numAvailableQuests do
             SelectGossipAvailableQuest(i)
         end
         local numActiveQuests = GetNumGossipActiveQuests()
-        for i = 1, numActiveQuests do
+        for i = numActiveQuests, 1, -1 do
             SelectGossipActiveQuest(i)
         end
 
@@ -60,7 +60,7 @@ local function OnEvent(self, event, arg1, ...)
             end
             --GetQuestReward(1)
         else
-            if completed_quests[quest_title] then
+            if not completed_quests[quest_title] then
                 if GetNumPartyMembers() > 0 then
                     SendChatMessage("[Q Completed]: " .. quest_title, "PARTY")
                 end
