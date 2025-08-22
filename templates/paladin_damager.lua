@@ -3,6 +3,21 @@ local frame = nil
 local rotation_tsf = nil
 local judgement_name = "Judgement of Light"
 local time = 0
+local taow = false -- The Art of War
+
+
+local function Rotation_Exorcism()
+    local cd = GetSpellCooldown("Exorcism")
+    if cd == 0 then
+        local in_range = IsSpellInRange("Exorcism", "target") == 1
+        if in_range then
+            -- cast Exorcism
+            rotation_tsf:SetVertexColor(1, 0, 0, 1) -- red
+            return 0
+        end
+    end
+    return 1
+end
 
 
 local function Rotation_Consecration()
@@ -98,12 +113,26 @@ local function Rotation()
         return
     end
 
+    if taow then
+        cd = Rotation_Exorcism()
+        if cd == 0 then
+            return
+        end
+    end
+
     if mana > 50 then
         if GetTargetHealthPercent() > 30 then
             cd = Rotation_Consecration()
             if cd == 0 then
                 return
             end
+        end
+    end
+
+    if not taow then
+        cd = Rotation_Exorcism()
+        if cd == 0 then
+            return
         end
     end
 end
@@ -141,6 +170,11 @@ function AAAMB.Methods.Templates.Paladin.Damager.Init()
     rotation_tsf = AAAMB.Methods.CreateTSF("Paladin_Damager_Rotation", 240, 0)
 
     SetKeyMacroBar()
+
+    local _, _, _, rank = GetTalentInfo(3, 17)
+    if rank and rank > 1 then
+        taow = true
+    end
 
     frame:SetScript("OnUpdate", OnUpdate)
 end
